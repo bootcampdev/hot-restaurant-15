@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    
+
     <div class="container">
         <h1 class="text-center">Table Reservation!</h1>
         <a href="/reservation">Make a Reservation</a>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Current Table Reservations</h2>
+                <ul id="table-reservations"></ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Wait Listed</h2>
+                <ul id="wait-listed"></ul>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,8 +32,18 @@
         $.ajax({
             url: "/api/tables",
             method: "GET"
-        }) .then(response => console.log(response))
+        }).then(response => {
+            console.log(response.tables);
+            let resTables = response.tables;
+            let resWait = response.waitList;
+
+            for (var i = 0; i < resTables.length; i++) {
+                $("#table-reservations").append(`<li>${resTables[i].customerName}</li>`)
+            }
+        })
             .catch(err => console.log(err))
+
     </script>
 </body>
+
 </html>
