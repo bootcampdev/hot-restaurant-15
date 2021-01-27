@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Table Reservation!</h1>
+        <form>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="phone-number" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone-number" name="phone-number">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email?</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+
+            <button type="submit" name="submit">Make Reservation</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const form = $('form')
+        const name = $("#name");
+        const phoneNumber = $("#phone-number");
+        const email = $("#email");
+
+        form.on("submit", e =>{
+            e.preventDefault();
+
+            const data = {
+                customerName: name.val(),
+                phoneNumber: phoneNumber.val(),
+                customerEmail: email.val()
+            }
+
+            console.log(data);
+
+            $.ajax({
+                url: "/api/tables/add",
+                method: "POST",
+                data,
+            }) .then(response => alert("Your reservation is table ", response.val))
+                .catch(err => console.log(err))
+        })
+
+    </script>
+</body>
+
+</html>
